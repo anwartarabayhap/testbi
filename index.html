@@ -3,10 +3,14 @@
 <head>
     <title>Tableau Visualization</title>
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
         #vizWrapper {
             width: 100%;
             height: 100%;
-            overflow: hidden;
             position: relative;
         }
         #vizContainer {
@@ -29,11 +33,20 @@
             url = "https://public.tableau.com/views/ZainBYOP-weekly/Dashboard1?:showAppBanner=false&:showVizHome=no&:embed=true&:showShareOptions=false&:origin=viz_share_link&:showShareOptions=false&:showDownload=false",
             options = {
                 hideTabs: true,
-                hideToolbar: true
+                hideToolbar: true,
+                width: containerDiv.offsetWidth + 'px',
+                height: containerDiv.offsetHeight + 'px'
             };
 
             var viz = new tableau.Viz(containerDiv, url, options);
         }
+        
+        // Reinitialize Tableau visualization on window resize
+        window.onresize = function() {
+            document.getElementById("vizContainer").innerHTML = "";
+            initViz();
+        };
+        
         window.onload = initViz;
     </script>
 </body>
