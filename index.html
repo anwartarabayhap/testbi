@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tableau Visualization with Auth0</title>
+    <title>Tableau Visualization</title>
     <style>
         /* Ensure the body and html take up the full height of the iframe */
         html, body {
@@ -32,45 +32,8 @@
     <div id="vizWrapper">
         <div id="vizContainer"></div>
     </div>
-    <script type="text/javascript" src="https://cdn.auth0.com/js/auth0/9.11/auth0.min.js"></script>
     <script type="text/javascript" src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
     <script type="text/javascript">
-        // Auth0 Configuration
-        const auth0 = new auth0.WebAuth({
-            domain: 'hapmena.us.auth0.com',
-            clientID: 'DKs4yt1ETeRcJoRwbtnNJE68WDs0899v',
-            redirectUri: window.location.href,
-            responseType: 'token id_token',
-            scope: 'openid profile email'
-        });
-
-        // Function to handle login
-        function login() {
-            auth0.authorize();
-        }
-
-        // Function to parse the hash and handle authentication
-        function handleAuthentication() {
-            auth0.parseHash(function(err, authResult) {
-                if (authResult && authResult.accessToken && authResult.idToken) {
-                    // User is authenticated
-                    auth0.client.userInfo(authResult.accessToken, function(err, user) {
-                        if (user) {
-                            // Initialize Tableau visualization after successful authentication
-                            initViz();
-                        }
-                    });
-                } else if (err) {
-                    console.error("Error authenticating", err);
-                    alert('Error: ' + err.error + '. Check the console for further details.');
-                } else {
-                    // If not authenticated, trigger login
-                    login();
-                }
-            });
-        }
-
-        // Initialize Tableau Visualization
         function initViz() {
             var containerDiv = document.getElementById("vizContainer"),
             url = "https://public.tableau.com/views/ZainBYOP-weekly/Dashboard1?:showAppBanner=false&:showVizHome=no&:embed=true &:showShareOptions=false&:origin=viz_share_link&:showShareOptions=false&:showDownload=false",
@@ -81,9 +44,7 @@
 
             var viz = new tableau.Viz(containerDiv, url, options);
         }
-
-        // Start authentication process on page load
-        window.onload = handleAuthentication;
+        window.onload = initViz;
     </script>
 </body>
 </html>
